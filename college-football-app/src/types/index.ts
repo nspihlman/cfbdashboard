@@ -1,9 +1,10 @@
 export interface Team {
   id: string;
-  name: string;
-  abbreviation: string;
+  school: string;
+  abbreviation?: string;
   conference?: string;
   logo?: string;
+  mascot?: string
 }
 
 export interface Game {

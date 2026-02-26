@@ -3,7 +3,7 @@ import './App.css';
 import TeamSelector from './components/TeamSelector';
 import SeasonSelector from './components/SeasonSelector';
 import Schedule from './components/Schedule';
-import { Team, Game } from './types';
+import type { Team, Game } from './types';
 import { fetchTeams, fetchGames } from './services/api';
 
 function App() {
@@ -18,6 +18,9 @@ function App() {
   // TODO: Fetch teams when component mounts
   // Hints:
   // - Use useEffect with empty dependency array []
+  useEffect(() => {
+    console.log(fetchTeams());
+  }, []);
   // - Call fetchTeams() from the API service
   // - Set loading state while fetching
   // - Handle errors with try/catch

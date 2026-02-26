@@ -1,10 +1,10 @@
-import { Team, Game } from '../types';
+import type { Team, Game } from '../types';
 
 const API_BASE_URL = 'https://api.collegefootballdata.com';
 
 // TODO: Get your free API key from https://collegefootballdata.com/key
 // and add it here or use environment variables
-const API_KEY = ''; // Add your API key here
+const API_KEY = import.meta.env.VITE_CFBD_API_KEY; // Add your API key here
 
 /**
  * Fetches all FBS teams
@@ -12,15 +12,26 @@ const API_KEY = ''; // Add your API key here
  * Docs: https://api.collegefootballdata.com/api/docs/?url=/api-docs.json#/teams/getTeams
  */
 export async function fetchTeams(): Promise<Team[]> {
-  // TODO: Implement API call to fetch teams
-  // Hints:
-  // - Use fetch() to make the API request
-  // - Include headers with Authorization: `Bearer ${API_KEY}`
-  // - Parse the JSON response
-  // - Map the API response to match our Team interface
-  // - Handle errors appropriately
+  const data = await fetch(API_BASE_URL + '/teams/fbs', {
+    headers: {
+      'Authorization': `Bearer ${API_KEY}`
+    }
+  }).then(res => {
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return res.json();
+  });
 
-  return [];
+  return data.map((item: any):Team => {
+    if (!item.id) throw new Error(`Team missing id: ${JSON.stringify(item)}`);
+    if (!item.school) throw new Error(`Team missing school: ${JSON.stringify(item)}`);
+    return {id: item.id,
+      school: item.school,
+      abbreviation: item.abbreviation ?? null,
+      conference: item.conference ?? null,
+      logo: item.logos[0] ?? null,
+      mascot: item.mascot ?? null
+    };
+  });
 }
 
 /**

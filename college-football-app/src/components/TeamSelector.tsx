@@ -1,4 +1,4 @@
-import { Team } from '../types';
+import type { Team } from '../types';
 
 interface TeamSelectorProps {
   teams: Team[];

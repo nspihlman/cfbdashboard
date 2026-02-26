@@ -1,4 +1,4 @@
-import { Game } from '../types';
+import type { Game } from '../types';
 
 interface ScheduleProps {
   games: Game[];
