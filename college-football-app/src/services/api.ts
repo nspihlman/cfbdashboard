@@ -42,13 +42,29 @@ export async function fetchTeams(): Promise<Team[]> {
  * @param teamId - The team abbreviation (e.g., "Alabama", "Ohio State")
  */
 export async function fetchGames(year: number, team: string): Promise<Game[]> {
-  // TODO: Implement API call to fetch games
-  // Hints:
-  // - Endpoint: `${API_BASE_URL}/games?year=${year}&team=${team}`
-  // - Include Authorization header
-  // - Map the API response to match our Game interface
-  // - You'll need to create Team objects from the home_team and away_team data
-  // - Check if home_points and away_points exist to determine if game is completed
-
-  return [];
+  const data = await fetch(API_BASE_URL + `/games?year=${year}&team=${team}`, {
+    headers: {
+      'Authorization': `Bearer ${API_KEY}`
+    }
+  }).then(res => {
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return res.json();
+  });
+  console.log(data)
+  return data.map((item: any): Game => {
+    if (!item.id) throw new Error(`Game missing id: ${JSON.stringify(item)}`);
+    if (!item.startDate) throw new Error(`Game missing startDate: ${JSON.stringify(item)}`);
+    if (!item.homeTeam) throw new Error(`Game missing homeTeam: ${JSON.stringify(item)}`);
+    if (!item.awayTeam) throw new Error(`Game missing awayTeam: ${JSON.stringify(item)}`);
+    if (!item.completed) throw new Error(`Game missing completed: ${JSON.stringify(item)}`);
+    return {id: item.id,
+      date: item.startDate,
+      homeTeam: {id: item.homeId, school: item.homeTeam},
+      awayTeam: {id: item.awayId, school: item.awayTeam},
+      isCompleted: item.completed,
+      homeScore: item.homePoints ?? null,
+      awayScore: item.awayPoints ?? null,
+      venue: item.venue ?? null,
+    }
+  });
 }

@@ -27,6 +27,9 @@ function App() {
 
   // TODO: Fetch games when team or season changes
   // Hints:
+    useEffect(() => {
+    console.log(fetchGames(2025, 'Michigan'));
+  }, []);
   // - Use useEffect with [selectedTeam, selectedSeason] as dependencies
   // - Only fetch if both selectedTeam and selectedSeason are not null
   // - Call fetchGames(year, teamName) from the API service
