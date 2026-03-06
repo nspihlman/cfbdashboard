@@ -12,10 +12,12 @@ export interface Game {
   date: string;
   homeTeam: Team;
   awayTeam: Team;
+  seasonType: "regular" | "postseason"
   homeScore?: number;
   awayScore?: number;
   isCompleted: boolean;
   venue?: string;
+  notes?: string;
 }
 
 export interface Season {

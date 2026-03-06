@@ -58,9 +58,11 @@ export async function fetchGames(year: number, team: string): Promise<Game[]> {
       homeTeam: {id: item.homeId, school: item.homeTeam},
       awayTeam: {id: item.awayId, school: item.awayTeam},
       isCompleted: item.completed,
+      seasonType: item.seasonType,
       homeScore: item.homePoints ?? null,
       awayScore: item.awayPoints ?? null,
       venue: item.venue ?? null,
+      notes: item.notes ?? null,
     }
   });
 }
