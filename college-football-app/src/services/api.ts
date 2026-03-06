@@ -1,9 +1,6 @@
 import type { Team, Game } from '../types';
 
 const API_BASE_URL = 'https://api.collegefootballdata.com';
-
-// TODO: Get your free API key from https://collegefootballdata.com/key
-// and add it here or use environment variables
 const API_KEY = import.meta.env.VITE_CFBD_API_KEY; // Add your API key here
 
 /**
@@ -50,7 +47,6 @@ export async function fetchGames(year: number, team: string): Promise<Game[]> {
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     return res.json();
   });
-  console.log(data)
   return data.map((item: any): Game => {
     if (!item.id) throw new Error(`Game missing id: ${JSON.stringify(item)}`);
     if (!item.startDate) throw new Error(`Game missing startDate: ${JSON.stringify(item)}`);
