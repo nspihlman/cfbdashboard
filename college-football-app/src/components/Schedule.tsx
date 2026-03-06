@@ -23,8 +23,8 @@ function Schedule({ games, teamName }: ScheduleProps) {
   const postseasonGames = games.filter(g => g.seasonType === 'postseason');
   return (
     <div className="schedule">
-      <h2>{teamName} Schedule ({getRecord(games, teamName)})</h2>
-      <h3>Regular Season ({getRecord(regularGames, teamName)})</h3>
+      <h2>{teamName} Schedule <span className="overall-record">{getRecord(games, teamName)}</span></h2>
+      <h3>Regular Season <span className="record-badge">{getRecord(regularGames, teamName)}</span></h3>
       <ul>
         {regularGames.map((game) => {
           const isHome = game.homeTeam.school === teamName;
@@ -46,7 +46,7 @@ function Schedule({ games, teamName }: ScheduleProps) {
       </ul>
       {postseasonGames.length > 0 && (
         <>
-          <h3>Postseason ({getRecord(postseasonGames, teamName)})</h3>
+          <h3>Postseason <span className="record-badge">{getRecord(postseasonGames, teamName)}</span></h3>
           <ul>{postseasonGames.map((game) =>{
             const isHome = game.homeTeam.school === teamName;
             const opponent = isHome ? game.awayTeam.school : game.homeTeam.school;

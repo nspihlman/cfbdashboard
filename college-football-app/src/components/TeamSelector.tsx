@@ -18,7 +18,7 @@ function TeamSelector({ teams, selectedTeam, onSelectTeam }: TeamSelectorProps) 
       <h2>Select a Team</h2>
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
-          <button className="flex w-64 items-center justify-between rounded-md border px-3 py-2 text-sm">
+          <button className="combobox-trigger">
             {selectedTeam ? selectedTeam.school : 'Select a team...'}
             <ChevronsUpDownIcon className="ml-2 size-4 opacity-50" />
           </button>

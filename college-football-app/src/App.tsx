@@ -42,16 +42,18 @@ function App() {
 
       <main>
         {loading && <p>Loading...</p>}
-        <TeamSelector
-          teams={teams}
-          selectedTeam={selectedTeam}
-          onSelectTeam={setSelectedTeam}
-        />
-        <SeasonSelector
-          availableSeasons={availableSeasons}
-          selectedSeason={selectedSeason}
-          onSelectSeason={setSelectedSeason}
-        />
+        <div className="controls">
+          <TeamSelector
+            teams={teams}
+            selectedTeam={selectedTeam}
+            onSelectTeam={setSelectedTeam}
+          />
+          <SeasonSelector
+            availableSeasons={availableSeasons}
+            selectedSeason={selectedSeason}
+            onSelectSeason={setSelectedSeason}
+          />
+        </div>
         {selectedTeam && selectedSeason && (
           <Schedule
             games={games}
