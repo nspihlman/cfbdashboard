@@ -15,6 +15,14 @@ function SeasonSelector({ availableSeasons, selectedSeason, onSelectSeason }: Se
     <div className="season-selector">
       <h2>Select a Season</h2>
       {/* TODO: Add your UI here */}
+      <select
+        value={selectedSeason ?? ''}
+        onChange={(e) => onSelectSeason(Number(e.target.value))}
+      >
+        {availableSeasons.map((szn) => (
+          <option value={szn}>{szn}</option>
+        ))}
+      </select>
     </div>
   );
 }
