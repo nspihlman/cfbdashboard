@@ -7,39 +7,32 @@ import type { Team, Game } from './types';
 import { fetchTeams, fetchGames } from './services/api';
 
 function App() {
-  // TODO: Set up state management
-  // Hints:
-  // - Use useState for teams (type: Team[])
-  // - Use useState for selectedTeam (type: Team | null)
-  // - Use useState for selectedSeason (type: number | null)
-  // - Use useState for games (type: Game[])
-  // - Use useState for loading state (type: boolean)
+  const [teams, setTeams] = useState<Team[]>([]);
+  const [selectedTeam, setSelectedTeam] = useState<Team | null>(null);
+  const [selectedSeason, setSelectedSeason] = useState<number | null>(null);
+  const [games, setGames] = useState<Game[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  // TODO: Fetch teams when component mounts
-  // Hints:
-  // - Use useEffect with empty dependency array []
   useEffect(() => {
-    console.log(fetchTeams());
+    fetchTeams()
+      .then(setTeams)
+      .catch(console.error)
+      .finally(() => setLoading(false));
   }, []);
-  // - Call fetchTeams() from the API service
-  // - Set loading state while fetching
-  // - Handle errors with try/catch
 
-  // TODO: Fetch games when team or season changes
-  // Hints:
-    useEffect(() => {
-    console.log(fetchGames(2025, 'Michigan'));
-  }, []);
-  // - Use useEffect with [selectedTeam, selectedSeason] as dependencies
-  // - Only fetch if both selectedTeam and selectedSeason are not null
-  // - Call fetchGames(year, teamName) from the API service
-  // - Set loading state while fetching
+  useEffect(() => {
+    if (!selectedTeam || !selectedSeason) return;
+    fetchGames(selectedSeason, selectedTeam.school)
+      .then(setGames)
+      .catch(console.error);
+  }, [selectedTeam, selectedSeason]);
 
-  // TODO: Create handler functions
-  // - handleTeamSelect: (team: Team) => void
-  // - handleSeasonSelect: (year: number) => void
-
-  const availableSeasons = [2024, 2023, 2022, 2021];
+  const START_YEAR = 1936;
+  const currentYear = new Date().getFullYear();
+  const availableSeasons = Array.from(
+    { length: currentYear - START_YEAR + 1 },
+    (_, i) => currentYear - i)
+  ;
 
   return (
     <div className="app">
@@ -48,27 +41,23 @@ function App() {
       </header>
 
       <main>
-        {/* TODO: Show loading state */}
-        {/* TODO: Pass the correct props to TeamSelector */}
+        {loading && <p>Loading...</p>}
         <TeamSelector
-          teams={[]}
-          selectedTeam={null}
-          onSelectTeam={() => {}}
+          teams={teams}
+          selectedTeam={selectedTeam}
+          onSelectTeam={setSelectedTeam}
         />
-
-        {/* TODO: Pass the correct props to SeasonSelector */}
         <SeasonSelector
           availableSeasons={availableSeasons}
-          selectedSeason={null}
-          onSelectSeason={() => {}}
+          selectedSeason={selectedSeason}
+          onSelectSeason={setSelectedSeason}
         />
-
-        {/* TODO: Only show Schedule when both team and season are selected */}
-        {/* TODO: Pass the games from state to Schedule component */}
-        <Schedule
-          games={[]}
-          teamName="Team Name"
-        />
+        {selectedTeam && selectedSeason && (
+          <Schedule
+            games={games}
+            teamName={selectedTeam.school}
+          />
+        )}
       </main>
     </div>
   );
