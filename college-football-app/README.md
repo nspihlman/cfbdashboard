@@ -2,24 +2,6 @@
 
 A React + TypeScript web application for viewing college football team schedules and results using the [College Football Data API](https://collegefootballdata.com/).
 
-## Getting Started
-
-### 1. Get Your API Key
-
-1. Visit https://collegefootballdata.com/key
-2. Sign up for a free API key
-3. Add your API key to `src/services/api.ts`:
-   ```typescript
-   const API_KEY = 'your-api-key-here';
-   ```
-
-### 2. Run the Development Server
-
-```bash
-npm run dev
-```
-
-Then open http://localhost:5173 in your browser.
 
 ## Project Structure
 

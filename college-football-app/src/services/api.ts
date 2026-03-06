@@ -47,13 +47,12 @@ export async function fetchGames(year: number, team: string): Promise<Game[]> {
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     return res.json();
   });
-  console.log(data)
   return data.map((item: any): Game => {
     if (!item.id) throw new Error(`Game missing id: ${JSON.stringify(item)}`);
     if (!item.startDate) throw new Error(`Game missing startDate: ${JSON.stringify(item)}`);
     if (!item.homeTeam) throw new Error(`Game missing homeTeam: ${JSON.stringify(item)}`);
     if (!item.awayTeam) throw new Error(`Game missing awayTeam: ${JSON.stringify(item)}`);
-    if (!item.completed) throw new Error(`Game missing completed: ${JSON.stringify(item)}`);
+    if (item.completed === undefined) throw new Error(`Game missing completed: ${JSON.stringify(item)}`);
     return {id: item.id,
       date: item.startDate,
       homeTeam: {id: item.homeId, school: item.homeTeam},
