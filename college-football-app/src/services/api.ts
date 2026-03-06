@@ -47,6 +47,7 @@ export async function fetchGames(year: number, team: string): Promise<Game[]> {
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     return res.json();
   });
+  console.log(data)
   return data.map((item: any): Game => {
     if (!item.id) throw new Error(`Game missing id: ${JSON.stringify(item)}`);
     if (!item.startDate) throw new Error(`Game missing startDate: ${JSON.stringify(item)}`);

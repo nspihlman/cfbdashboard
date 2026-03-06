@@ -35,31 +35,8 @@ src/
 └── App.css                     # Styles
 ```
 
-## What You Need to Implement
 
-Look for `TODO` comments throughout the codebase. Here's the recommended order:
-
-### Step 1: API Service (`src/services/api.ts`)
-- Implement `fetchTeams()` to get all FBS teams
-- Implement `fetchGames()` to get games for a specific team and year
-- Test your API calls in the browser console
-
-### Step 2: Components
-- **TeamSelector**: Create a dropdown or list to select a team
-- **SeasonSelector**: Create a dropdown or buttons to select a year
-- **Schedule**: Display the list of games with scores
-
-### Step 3: App State (`src/App.tsx`)
-- Set up `useState` hooks for teams, games, selectedTeam, selectedSeason, and loading
-- Implement `useEffect` to fetch teams on mount
-- Implement `useEffect` to fetch games when team/season changes
-- Create handler functions for team and season selection
-- Pass the correct props to child components
-
-### Step 4: Styling
-- Customize `App.css` to make it look great
-- Consider adding wins/losses indicators
-- Make it responsive for mobile
+Update this to work for postseason/regular season distinction
 
 ## API Documentation
 
@@ -73,12 +50,5 @@ Look for `TODO` comments throughout the codebase. Here's the recommended order:
 - [React useEffect Hook](https://react.dev/reference/react/useEffect)
 - [TypeScript with React](https://react.dev/learn/typescript)
 - [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)
-
-## Tips
-
-- Start small: get one component working before moving to the next
-- Use `console.log()` to debug your state and API responses
-- Test your API calls in the browser Network tab
-- TypeScript will help you catch errors - pay attention to the types!
 
 Good luck and have fun building!

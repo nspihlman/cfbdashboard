@@ -6,18 +6,29 @@ interface ScheduleProps {
 }
 
 function Schedule({ games, teamName }: ScheduleProps) {
-  // TODO: Implement schedule display
-  // Hints:
-  // - Map over the games array to display each game
-  // - Show date, opponent, score (if completed)
-  // - Consider showing home vs away games differently
-  // - Format the date nicely (use Date object)
-  // - Show final score if isCompleted is true
 
   return (
     <div className="schedule">
       <h2>{teamName} Schedule</h2>
-      {/* TODO: Add your game list here */}
+      <ul>
+        {games.map((game) => {
+          const isHome = game.homeTeam.school === teamName;
+          const opponent = isHome ? game.awayTeam.school : game.homeTeam.school;
+          const teamScore = isHome ? game.homeScore : game.awayScore;
+          const oppScore = isHome ? game.awayScore : game.homeScore;
+          const result = (game.isCompleted && teamScore != null && oppScore != null)
+           ? teamScore > oppScore ? 'W' : 'L' : null;
+          const score = result ? `${result} ${teamScore}-${oppScore}` : ''
+          return(
+            <li key={game.id}>
+              <span>{new Date(game.date).toLocaleDateString()}</span>
+              <span>{isHome ? "vs" : "@"} {opponent}</span>
+              <span className={result === 'W' ? 'win': result === 'L' ? 'loss' : ''}>
+                {score}</span>
+            </li>
+    )
+  })}
+      </ul>
       {games.length === 0 && <p>No games found for this season.</p>}
     </div>
   );
